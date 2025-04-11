@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок по взаимодействию с DOM</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Взаимодействие с DOM через JavaScript</h1>
+    </header>
+    <main>
+        <section id="introduction">
+            <h2>Введение</h2>
+            <p>Привет, ребята! На этом уроке мы изучаем, как с помощью JavaScript "оживлять" веб-страницы, работая с DOM (Document Object Model). DOM — это как карта страницы, а JavaScript — наш инструмент, чтобы менять её содержимое и поведение.</p>
+        </section>
+
+        <section id="theory">
+            <h2>Теория</h2>
+            <p>Объект <code>document</code> — это главный "ключ" к DOM. С его помощью мы можем находить элементы на странице и изменять их. Вот что мы узнали:</p>
+            <h3>Основные методы и свойства:</h3>
+            <ul>
+                <li><code>document.getElementById(id)</code> — находит элемент по его ID.</li>
+                <li><code>document.querySelector(selector)</code> — находит первый элемент по CSS-селектору.</li>
+                <li><code>document.querySelectorAll(selector)</code> — находит все элементы по CSS-селектору.</li>
+                <li><code>element.innerHTML</code> — меняет или получает HTML внутри элемента.</li>
+                <li><code>element.textContent</code> — меняет или получает текст внутри элемента.</li>
+                <li><code>element.addEventListener(event, handler)</code> — добавляет реакцию на действия (например, клик).</li>
+            </ul>
+        </section>
+
+        <section id="practice">
+            <h2>Практические задачки</h2>
+            <p>Давайте попрактикуемся! Вот три мини-проекта, которые помогут вам освоить работу с DOM. Попробуйте их прямо здесь!</p>
+
+            <h3>1. Игра в крестики-нолики</h3>
+            <p>Создай поле 3x3. При клике на ячейку ставь "X" или "O" в зависимости от хода. Попробуй прямо сейчас!</p>
+            <p><strong>Пример кода:</strong></p>
+            <h4>HTML:</h4>
+            <pre><code>&lt;div id="game-board"&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <h4>CSS:</h4>
+            <pre><code>#game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+    margin: 20px auto;
+    width: 310px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    cursor: pointer;
+}</code></pre>
+            <h4>JavaScript:</h4>
+            <pre><code>const cells = document.querySelectorAll('.cell');
+let currentPlayer = 'X';
+
+cells.forEach(cell => {
+    cell.addEventListener('click', () => {
+        if (cell.textContent === '') {
+            cell.textContent = currentPlayer;
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+    });
+});</code></pre>
+            <h4>Попробуй здесь:</h4>
+            <div id="game-board">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+
+            <h3>2. Калькулятор цвета</h3>
+            <p>Создай кнопку, которая при клике меняет цвет фона всей страницы на случайный. Нажми и убедись!</p>
+            <p><strong>Пример кода:</strong></p>
+            <h4>HTML:</h4>
+            <pre><code>&lt;button id="color-btn"&gt;Сменить цвет&lt;/button&gt;</code></pre>
+            <h4>JavaScript:</h4>
+            <pre><code>document.getElementById('color-btn').addEventListener('click', () => {
+    document.body.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+});</code></pre>
+            <h4>Попробуй здесь:</h4>
+            <button id="color-btn-example">Сменить цвет</button>
+
+            <h3>3. Список желаний</h3>
+            <p>Создай поле ввода и кнопку. При нажатии на кнопку текст из поля добавляется в список ниже. Введи что-нибудь!</p>
+            <p><strong>Пример кода:</strong></p>
+            <h4>HTML:</h4>
+            <pre><code>&lt;input type="text" id="wish-input" placeholder="Введи желание"&gt;
+&lt;button id="add-wish"&gt;Добавить&lt;/button&gt;
+&lt;ul id="wish-list"&gt;&lt;/ul&gt;</code></pre>
+            <h4>JavaScript:</h4>
+            <pre><code>document.getElementById('add-wish').addEventListener('click', () => {
+    const input = document.getElementById('wish-input');
+    const wish = input.value;
+    if (wish) {
+        const li = document.createElement('li');
+        li.textContent = wish;
+        document.getElementById('wish-list').appendChild(li);
+        input.value = '';
+    }
+});</code></pre>
+            <h4>Попробуй здесь:</h4>
+            <input type="text" id="wish-input-example" placeholder="Введи желание">
+            <button id="add-wish-example">Добавить</button>
+            <ul id="wish-list-example"></ul>
+        </section>
+
+        <section id="steps">
+            <h2>Подробные шаги: Игра в крестики-нолики</h2>
+            <p>Давай разберем, как сделать игру в крестики-нолики.</p>
+            <h3>Шаг 1: HTML</h3>
+            <pre><code>&lt;div id="game-board"&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+    &lt;div class="cell"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <h3>Шаг 2: CSS</h3>
+            <pre><code>#game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+    margin: 20px auto;
+    width: 310px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    cursor: pointer;
+}</code></pre>
+            <h3>Шаг 3: JavaScript</h3>
+            <pre><code>const cells = document.querySelectorAll('.cell');
+let currentPlayer = 'X';
+
+cells.forEach(cell => {
+    cell.addEventListener('click', () => {
+        if (cell.textContent === '') {
+            cell.textContent = currentPlayer;
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+    });
+});</code></pre>
+            <p>Это простая версия. Можете добавить кнопку "Новая игра" или проверку победителя!</p>
+        </section>
+
+        <section id="homework">
+            <h2>Домашнее задание</h2>
+            <p>Ваша задача — создать веб-страницу, которая меняет цвет фона параграфа при нажатии на кнопку. Это задание поможет вам закрепить навыки работы с DOM и событиями в JavaScript. Выполните все шаги точно так, как указано ниже.</p>
+            <h3>Условия выполнения:</h3>
+            <ol>
+                <li><strong>Создайте HTML-страницу:</strong>
+                    <ul>
+                        <li>Добавьте кнопку с <code>id="change-color"</code> и текстом внутри: "Изменить цвет".</li>
+                        <li>Добавьте параграф с <code>id="text"</code> и текстом внутри: "Этот текст будет менять цвет фона".</li>
+                        <li>Ничего лишнего добавлять не нужно.</li>
+                    </ul>
+                </li>
+                <li><strong>Добавьте стили:</strong>
+                    <ul>
+                        <li>В секции <code>&lt;style&gt;</code> внутри <code>&lt;head&gt;</code> задайте следующие правила:</li>
+                        <li>Для элемента с <code>id="text"</code> установите <code>padding: 20px;</code> и <code>border: 1px solid #ccc;</code>.</li>
+                        <li>Другие стили добавлять не нужно.</li>
+                    </ul>
+                </li>
+                <li><strong>Напишите JavaScript-код:</strong>
+                    <ul>
+                        <li>Используйте метод <code>document.getElementById</code> для получения элементов кнопки и параграфа.</li>
+                        <li>Добавьте обработчик события клика на кнопку с помощью <code>addEventListener</code>.</li>
+                        <li>При нажатии на кнопку цвет фона параграфа должен измениться на случайный цвет.</li>
+                        <li>Для генерации случайного цвета используйте формулу: <code>'#' + Math.floor(Math.random()*16777215).toString(16)</code>.</li>
+                    </ul>
+                </li>
+            </ol>
+            <h3>Итоговый код:</h3>
+            <p>Ваш код должен выглядеть ровно так, как показано ниже. Не добавляйте никаких изменений или дополнительных функций.</p>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Домашнее задание&lt;/title&gt;
+    &lt;style&gt;
+        #text {
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;button id="change-color"&gt;Изменить цвет&lt;/button&gt;
+    &lt;p id="text"&gt;Этот текст будет менять цвет фона&lt;/p&gt;
+    &lt;script&gt;
+        document.getElementById('change-color').addEventListener('click', function() {
+            const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            document.getElementById('text').style.backgroundColor = randomColor;
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <h3>Как сдать задание:</h3>
+            <ol>
+                <li>Скопируйте код выше в файл с названием <code>homework.html</code>.</li>
+                <li>Создайте архив (.zip) с этим файлом.</li>
+                <li>Заполните форму ниже:
+                    <ul>
+                        <li>Укажите ваше имя и фамилию.</li>
+                        <li>Загрузите архив с файлом <code>homework.html</code>.</li>
+                    </ul>
+                </li>
+                <li>Нажмите кнопку "Отправить".</li>
+            </ol>
+            <form id="upload-form">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="surname">Фамилия:</label>
+                <input type="text" id="surname" name="surname" required>
+                <label for="file">Загрузить архив (.zip):</label>
+                <input type="file" id="file" name="file" accept=".zip" required>
+                <button type="submit">Отправить</button>
+            </form>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
